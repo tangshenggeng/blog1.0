@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ink.tsg.blog.dao.FClassificationMapper">
+  <resultMap id="BaseResultMap" type="ink.tsg.blog.bean.FClassification">
+    <id column="FClassification_id" jdbcType="INTEGER" property="fclassificationId" />
+    <result column="FClassification_name" jdbcType="VARCHAR" property="fclassificationName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FClassification_id, FClassification_name
+  </sql>
+  <select id="selectByExample" parameterType="ink.tsg.blog.bean.FClassificationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_fclassification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_fclassification
+    where FClassification_id = #{fclassificationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_fclassification
+    where FClassification_id = #{fclassificationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="ink.tsg.blog.bean.FClassificationExample">
+    delete from tb_fclassification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ink.tsg.blog.bean.FClassification">
+    insert into tb_fclassification (FClassification_id, FClassification_name
+      )
+    values (#{fclassificationId,jdbcType=INTEGER}, #{fclassificationName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ink.tsg.blog.bean.FClassification">
+    insert into tb_fclassification
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fclassificationId != null">
+        FClassification_id,
+      </if>
+      <if test="fclassificationName != null">
+        FClassification_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fclassificationId != null">
+        #{fclassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="fclassificationName != null">
+        #{fclassificationName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ink.tsg.blog.bean.FClassificationExample" resultType="java.lang.Long">
+    select count(*) from tb_fclassification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_fclassification
+    <set>
+      <if test="record.fclassificationId != null">
+        FClassification_id = #{record.fclassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fclassificationName != null">
+        FClassification_name = #{record.fclassificationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_fclassification
+    set FClassification_id = #{record.fclassificationId,jdbcType=INTEGER},
+      FClassification_name = #{record.fclassificationName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ink.tsg.blog.bean.FClassification">
+    update tb_fclassification
+    <set>
+      <if test="fclassificationName != null">
+        FClassification_name = #{fclassificationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FClassification_id = #{fclassificationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ink.tsg.blog.bean.FClassification">
+    update tb_fclassification
+    set FClassification_name = #{fclassificationName,jdbcType=VARCHAR}
+    where FClassification_id = #{fclassificationId,jdbcType=INTEGER}
+  </update>
+</mapper>
